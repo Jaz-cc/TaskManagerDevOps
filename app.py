@@ -110,3 +110,27 @@ def editar(id):
 
     conexion.close()
     return render_template("editar.html", tarea=tarea)
+
+
+@app.route("/eliminar/<int:id>", methods=["POST"])
+def eliminar(id):
+    conexion = conectar_bd()
+
+    tarea = conexion.execute(
+        "SELECT id FROM tareas WHERE id = ?", (id,)
+    ).fetchone()
+
+    if tarea is None:
+        conexion.close()
+        flash("La tarea no existe o ya fue eliminada.")
+        return redirect(url_for("inicio"))
+
+    conexion.execute(
+        "DELETE FROM tareas WHERE id = ?", (id,)
+    )
+
+    conexion.commit()
+    conexion.close()
+
+    flash("¡Tarea eliminada correctamente!")
+    return redirect(url_for("inicio"))

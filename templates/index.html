@@ -5,20 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskManager</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
 
     <main class="container">
+
         <h1>TaskManager</h1>
         <p>Organiza y administra tus actividades.</p>
 
+        <!-- Mensajes de Flask -->
         {% with mensajes = get_flashed_messages() %}
             {% for mensaje in mensajes %}
                 <div class="mensaje">{{ mensaje }}</div>
             {% endfor %}
         {% endwith %}
 
+        <!-- Formulario para registrar tareas -->
         <section class="formulario">
             <h2>Registrar nueva tarea</h2>
 
@@ -53,46 +58,94 @@
             </form>
         </section>
 
-<section class="lista-tareas">
-    <h2>Mis tareas</h2>
+        <!-- Lista de tareas -->
+        <section class="lista-tareas">
 
-    {% if tareas %}
-        <div class="tabla-contenedor">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Prioridad</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
+            <h2>Mis tareas</h2>
 
-                <tbody>
-                    {% for tarea in tareas %}
-                    <tr>
-                        <td>{{ tarea.nombre }}</td>
-                        <td>{{ tarea.descripcion or 'Sin descripción' }}</td>
-                        <td>
-                            <span class="prioridad {{ tarea.prioridad|lower }}">
-                                {{ tarea.prioridad }}
-                            </span>
-                        </td>
-                        <td>{{ tarea.estado }}</td>
-                        <td> <a class="btn-editar" href="{{ url_for('editar', id=tarea.id) }}">
-                            Editar
-                        </a>
-                    </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <p class="sin-tareas">Todavía no tienes tareas registradas.</p>
-    {% endif %}
-</section>
+            {% if tareas %}
+
+                <div class="tabla-contenedor">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for tarea in tareas %}
+
+                            <tr>
+
+                                <td>{{ tarea.nombre }}</td>
+
+                                <td>
+                                    {{ tarea.descripcion or 'Sin descripción' }}
+                                </td>
+
+                                <td>
+                                    <span class="prioridad {{ tarea.prioridad|lower }}">
+                                        {{ tarea.prioridad }}
+                                    </span>
+                                </td>
+
+                                <td>{{ tarea.estado }}</td>
+
+                                <!-- Acciones -->
+                                <td class="acciones">
+
+                                    <a
+                                        class="btn-editar"
+                                        href="{{ url_for('editar', id=tarea.id) }}"
+                                    >
+                                        Editar
+                                    </a>
+
+                                    <form
+                                        action="{{ url_for('eliminar', id=tarea.id) }}"
+                                        method="POST"
+                                        class="form-eliminar"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn-eliminar"
+                                        >
+                                            Eliminar
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <p class="sin-tareas">
+                    Todavía no tienes tareas registradas.
+                </p>
+
+            {% endif %}
+
+        </section>
 
     </main>
 
