@@ -96,8 +96,34 @@
                                         {{ tarea.prioridad }}
                                     </span>
                                 </td>
+                                <td>
+                                    <form action="{{ url_for('cambiar_estado', id=tarea.id) }}"
+                                        method="POST"
+                                        class="form-estado">
 
-                                <td>{{ tarea.estado }}</td>
+                                        <select name="estado" class="select-estado">
+                                            <option value="Pendiente"
+                                                {% if tarea.estado == 'Pendiente' %}selected{% endif %}>
+                                                Pendiente
+                                            </option>
+
+                                            <option value="En proceso"
+                                                {% if tarea.estado == 'En proceso' %}selected{% endif %}>
+                                                En proceso
+                                            </option>
+
+                                            <option value="Terminada"
+                                                {% if tarea.estado == 'Terminada' %}selected{% endif %}>
+                                                Terminada
+                                            </option>
+                                        </select>
+
+                                        <button type="submit" class="btn-estado">
+                                            Actualizar
+                                        </button>
+                                    </form>
+                                </td>
+
 
                                 <!-- Acciones -->
                                 <td class="acciones">
