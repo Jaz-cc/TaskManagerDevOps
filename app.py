@@ -31,7 +31,6 @@ def crear_tabla():
     conexion.close()
 
 
-
 @app.route("/")
 def inicio():
     conexion = conectar_bd()
@@ -41,7 +40,6 @@ def inicio():
     conexion.close()
 
     return render_template("index.html", tareas=tareas)
-
 
 
 @app.route("/registrar", methods=["POST"])
@@ -66,11 +64,6 @@ def registrar():
 
     flash("¡Tarea registrada correctamente!")
     return redirect(url_for("inicio"))
-
-
-if __name__ == "__main__":
-    crear_tabla()
-    app.run(debug=True)
 
 
 @app.route("/editar/<int:id>", methods=["GET", "POST"])
@@ -135,10 +128,42 @@ def eliminar(id):
     flash("¡Tarea eliminada correctamente!")
     return redirect(url_for("inicio"))
 
+
+@app.route("/cambiar-estado/<int:id>", methods=["POST"])
+def cambiar_estado(id):
+    estados_validos = ["Pendiente", "En proceso", "Terminada"]
+    nuevo_estado = request.form.get("estado", "")
+
+    if nuevo_estado not in estados_validos:
+        flash("El estado de la tarea no es válido.")
+        return redirect(url_for("inicio"))
+
+    conexion = conectar_bd()
+
+    tarea = conexion.execute(
+        "SELECT id FROM tareas WHERE id = ?", (id,)
+    ).fetchone()
+
+    if tarea is None:
+        conexion.close()
+        flash("La tarea no existe.")
+        return redirect(url_for("inicio"))
+
+    conexion.execute(
+        "UPDATE tareas SET estado = ? WHERE id = ?",
+        (nuevo_estado, id)
+    )
+
+    conexion.commit()
+    conexion.close()
+
+    flash("Estado de la tarea actualizado correctamente.")
+    return redirect(url_for("inicio"))
+
+
 @app.route("/cambiar-prioridad/<int:id>", methods=["POST"])
 def cambiar_prioridad(id):
     prioridades_validas = ["Alta", "Media", "Baja"]
-
     nueva_prioridad = request.form.get("prioridad", "")
 
     if nueva_prioridad not in prioridades_validas:
@@ -166,3 +191,8 @@ def cambiar_prioridad(id):
 
     flash("Prioridad actualizada correctamente.")
     return redirect(url_for("inicio"))
+
+
+if __name__ == "__main__":
+    crear_tabla()
+    app.run(debug=True)

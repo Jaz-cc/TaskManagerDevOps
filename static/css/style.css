@@ -184,28 +184,46 @@ th {
     background: #b91c1c;
 }
 
-.form-prioridad {
+.form-prioridad,
+.form-estado {
     display: flex;
     flex-direction: column;
     gap: 7px;
-    min-width: 100px;
+    min-width: 110px;
 }
 
-.select-prioridad {
+.select-prioridad,
+.select-estado {
     padding: 8px;
     border: 1px solid #cbd5e1;
     border-radius: 7px;
     background: white;
 }
 
-.btn-prioridad {
+.btn-prioridad,
+.btn-estado {
     width: auto;
     margin: 0;
     padding: 8px;
     font-size: 13px;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.btn-prioridad {
     background: #7c3aed;
 }
 
 .btn-prioridad:hover {
     background: #6d28d9;
+}
+
+.btn-estado {
+    background: #0f766e;
+}
+
+.btn-estado:hover {
+    background: #115e59;
 }
