@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +26,7 @@
 
         <!-- Formulario para registrar tareas -->
         <section class="formulario">
+
             <h2>Registrar nueva tarea</h2>
 
             <form action="{{ url_for('registrar') }}" method="POST">
@@ -56,6 +58,7 @@
                 <button type="submit">Guardar tarea</button>
 
             </form>
+
         </section>
 
         <!-- Lista de tareas -->
@@ -83,117 +86,129 @@
 
                             {% for tarea in tareas %}
 
-                            
-<tr>
-    <td>{{ tarea.nombre }}</td>
+                                <tr>
 
-    <td>
-        {{ tarea.descripcion or 'Sin descripción' }}
-    </td>
+                                    <!-- Nombre -->
+                                    <td>{{ tarea.nombre }}</td>
 
-    <td>
-        <form action="{{ url_for('cambiar-prioridad', id=tarea.id) }}"
-              method="POST"
-              class="form-prioridad">
+                                    <!-- Descripción -->
+                                    <td>
+                                        {{ tarea.descripcion or 'Sin descripción' }}
+                                    </td>
 
-            <select name="prioridad" class="select-prioridad">
-                <option value="Alta"
-                    {% if tarea.prioridad == 'Alta' %}selected{% endif %}>
-                    Alta
-                </option>
+                                    <!-- Cambiar prioridad -->
+                                    <td>
 
-                <option value="Media"
-                    {% if tarea.prioridad == 'Media' %}selected{% endif %}>
-                    Media
-                </option>
-
-                <option value="Baja"
-                    {% if tarea.prioridad == 'Baja' %}selected{% endif %}>
-                    Baja
-                </option>
-            </select>
-
-            <button type="submit" class="btn-prioridad">
-                Guardar
-            </button>
-        </form>
-    </td>
-
-    <td>
-        <form action="{{ url_for('cambiar_estado', id=tarea.id) }}"
-              method="POST"
-              class="form-estado">
-
-            <select name="estado" class="select-estado">
-                <option value="Pendiente"
-                    {% if tarea.estado == 'Pendiente' %}selected{% endif %}>
-                    Pendiente
-                </option>
-
-                <option value="En proceso"
-                    {% if tarea.estado == 'En proceso' %}selected{% endif %}>
-                    En proceso
-                </option>
-
-                <option value="Terminada"
-                    {% if tarea.estado == 'Terminada' %}selected{% endif %}>
-                    Terminada
-                </option>
-            </select>
-
-            <button type="submit" class="btn-estado">
-                Actualizar
-            </button>
-        </form>
-    </td>
-
-    <td class="acciones">
-        <a class="btn-editar"
-           href="{{ url_for('editar', id=tarea.id) }}">
-            Editar
-        </a>
-
-        <form action="{{ url_for('eliminar', id=tarea.id) }}"
-              method="POST"
-              class="form-eliminar"
-              onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">
-
-            <button type="submit" class="btn-eliminar">
-                Eliminar
-            </button>
-        </form>
-    </td>
-</tr>
-
-                                <!-- Acciones -->
-                                <td class="acciones">
-
-                                    <a
-                                        class="btn-editar"
-                                        href="{{ url_for('editar', id=tarea.id) }}"
-                                    >
-                                        Editar
-                                    </a>
-
-                                    <form
-                                        action="{{ url_for('eliminar', id=tarea.id) }}"
-                                        method="POST"
-                                        class="form-eliminar"
-                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');"
-                                    >
-
-                                        <button
-                                            type="submit"
-                                            class="btn-eliminar"
+                                        <form
+                                            action="{{ url_for('cambiar_prioridad', id=tarea.id) }}"
+                                            method="POST"
+                                            class="form-prioridad"
                                         >
-                                            Eliminar
-                                        </button>
 
-                                    </form>
+                                            <select
+                                                name="prioridad"
+                                                class="select-prioridad"
+                                            >
 
-                                </td>
+                                                <option value="Alta"
+                                                    {% if tarea.prioridad == 'Alta' %}selected{% endif %}>
+                                                    Alta
+                                                </option>
 
-                            </tr>
+                                                <option value="Media"
+                                                    {% if tarea.prioridad == 'Media' %}selected{% endif %}>
+                                                    Media
+                                                </option>
+
+                                                <option value="Baja"
+                                                    {% if tarea.prioridad == 'Baja' %}selected{% endif %}>
+                                                    Baja
+                                                </option>
+
+                                            </select>
+
+                                            <button
+                                                type="submit"
+                                                class="btn-prioridad"
+                                            >
+                                                Guardar
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                    <!-- Cambiar estado -->
+                                    <td>
+
+                                        <form
+                                            action="{{ url_for('cambiar_estado', id=tarea.id) }}"
+                                            method="POST"
+                                            class="form-estado"
+                                        >
+
+                                            <select
+                                                name="estado"
+                                                class="select-estado"
+                                            >
+
+                                                <option value="Pendiente"
+                                                    {% if tarea.estado == 'Pendiente' %}selected{% endif %}>
+                                                    Pendiente
+                                                </option>
+
+                                                <option value="En proceso"
+                                                    {% if tarea.estado == 'En proceso' %}selected{% endif %}>
+                                                    En proceso
+                                                </option>
+
+                                                <option value="Terminada"
+                                                    {% if tarea.estado == 'Terminada' %}selected{% endif %}>
+                                                    Terminada
+                                                </option>
+
+                                            </select>
+
+                                            <button
+                                                type="submit"
+                                                class="btn-estado"
+                                            >
+                                                Actualizar
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                    <!-- Acciones -->
+                                    <td class="acciones">
+
+                                        <a
+                                            class="btn-editar"
+                                            href="{{ url_for('editar', id=tarea.id) }}"
+                                        >
+                                            Editar
+                                        </a>
+
+                                        <form
+                                            action="{{ url_for('eliminar', id=tarea.id) }}"
+                                            method="POST"
+                                            class="form-eliminar"
+                                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="btn-eliminar"
+                                            >
+                                                Eliminar
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
 
                             {% endfor %}
 
@@ -216,4 +231,5 @@
     </main>
 
 </body>
+
 </html>
