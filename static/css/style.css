@@ -162,3 +162,24 @@ th {
     text-decoration: none;
 }
 
+
+.form-eliminar {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.btn-eliminar {
+    width: auto;
+    padding: 7px 13px;
+    margin: 0;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-eliminar:hover {
+    background: #b91c1c;
+}
