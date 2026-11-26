@@ -52,6 +52,43 @@
 
             </form>
         </section>
+
+<section class="lista-tareas">
+    <h2>Mis tareas</h2>
+
+    {% if tareas %}
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Prioridad</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for tarea in tareas %}
+                    <tr>
+                        <td>{{ tarea.nombre }}</td>
+                        <td>{{ tarea.descripcion or 'Sin descripción' }}</td>
+                        <td>
+                            <span class="prioridad {{ tarea.prioridad|lower }}">
+                                {{ tarea.prioridad }}
+                            </span>
+                        </td>
+                        <td>{{ tarea.estado }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="sin-tareas">Todavía no tienes tareas registradas.</p>
+    {% endif %}
+</section>
+
     </main>
 
 </body>

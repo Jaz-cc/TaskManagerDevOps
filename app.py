@@ -31,9 +31,17 @@ def crear_tabla():
     conexion.close()
 
 
+
 @app.route("/")
 def inicio():
-    return render_template("index.html")
+    conexion = conectar_bd()
+    tareas = conexion.execute(
+        "SELECT * FROM tareas ORDER BY id DESC"
+    ).fetchall()
+    conexion.close()
+
+    return render_template("index.html", tareas=tareas)
+
 
 
 @app.route("/registrar", methods=["POST"])
