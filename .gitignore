@@ -1,0 +1,11 @@
+# Entorno virtual de Python
+venv/
+.venv/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Base de datos local
+*.db
