@@ -134,3 +134,35 @@ def eliminar(id):
 
     flash("¡Tarea eliminada correctamente!")
     return redirect(url_for("inicio"))
+
+@app.route("/cambiar-prioridad/<int:id>", methods=["POST"])
+def cambiar_prioridad(id):
+    prioridades_validas = ["Alta", "Media", "Baja"]
+
+    nueva_prioridad = request.form.get("prioridad", "")
+
+    if nueva_prioridad not in prioridades_validas:
+        flash("La prioridad seleccionada no es válida.")
+        return redirect(url_for("inicio"))
+
+    conexion = conectar_bd()
+
+    tarea = conexion.execute(
+        "SELECT id FROM tareas WHERE id = ?", (id,)
+    ).fetchone()
+
+    if tarea is None:
+        conexion.close()
+        flash("La tarea no existe.")
+        return redirect(url_for("inicio"))
+
+    conexion.execute(
+        "UPDATE tareas SET prioridad = ? WHERE id = ?",
+        (nueva_prioridad, id)
+    )
+
+    conexion.commit()
+    conexion.close()
+
+    flash("Prioridad actualizada correctamente.")
+    return redirect(url_for("inicio"))

@@ -89,13 +89,35 @@
 
                                 <td>
                                     {{ tarea.descripcion or 'Sin descripción' }}
+                                </td> 
+                                <td>
+                                    <form action="{{ url_for('cambiar_prioridad', id=tarea.id) }}"
+                                        method="POST"
+                                        class="form-prioridad">
+
+                                        <select name="prioridad" class="select-prioridad">
+                                            <option value="Alta"
+                                                {% if tarea.prioridad == 'Alta' %}selected{% endif %}>
+                                                Alta
+                                            </option>
+
+                                            <option value="Media"
+                                                {% if tarea.prioridad == 'Media' %}selected{% endif %}>
+                                                Media
+                                            </option>
+
+                                            <option value="Baja"
+                                                {% if tarea.prioridad == 'Baja' %}selected{% endif %}>
+                                                Baja
+                                            </option>
+                                        </select>
+
+                                        <button type="submit" class="btn-prioridad">
+                                            Guardar
+                                        </button>
+                                    </form>
                                 </td>
 
-                                <td>
-                                    <span class="prioridad {{ tarea.prioridad|lower }}">
-                                        {{ tarea.prioridad }}
-                                    </span>
-                                </td>
 
                                 <td>{{ tarea.estado }}</td>
 

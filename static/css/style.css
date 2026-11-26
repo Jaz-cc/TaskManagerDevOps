@@ -183,3 +183,29 @@ th {
 .btn-eliminar:hover {
     background: #b91c1c;
 }
+
+.form-prioridad {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 100px;
+}
+
+.select-prioridad {
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    background: white;
+}
+
+.btn-prioridad {
+    width: auto;
+    margin: 0;
+    padding: 8px;
+    font-size: 13px;
+    background: #7c3aed;
+}
+
+.btn-prioridad:hover {
+    background: #6d28d9;
+}
