@@ -134,3 +134,35 @@ def eliminar(id):
 
     flash("¡Tarea eliminada correctamente!")
     return redirect(url_for("inicio"))
+
+@app.route("/cambiar-estado/<int:id>", methods=["POST"])
+def cambiar_estado(id):
+    estados_validos = ["Pendiente", "En proceso", "Terminada"]
+
+    nuevo_estado = request.form.get("estado", "")
+
+    if nuevo_estado not in estados_validos:
+        flash("El estado seleccionado no es válido.")
+        return redirect(url_for("inicio"))
+
+    conexion = conectar_bd()
+
+    tarea = conexion.execute(
+        "SELECT id FROM tareas WHERE id = ?", (id,)
+    ).fetchone()
+
+    if tarea is None:
+        conexion.close()
+        flash("La tarea no existe.")
+        return redirect(url_for("inicio"))
+
+    conexion.execute(
+        "UPDATE tareas SET estado = ? WHERE id = ?",
+        (nuevo_estado, id)
+    )
+
+    conexion.commit()
+    conexion.close()
+
+    flash("Estado de la tarea actualizado correctamente.")
+    return redirect(url_for("inicio"))

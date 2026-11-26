@@ -183,3 +183,28 @@ th {
 .btn-eliminar:hover {
     background: #b91c1c;
 }
+
+.form-estado {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 120px;
+}
+
+.select-estado {
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+}
+
+.btn-estado {
+    width: auto;
+    margin: 0;
+    padding: 8px;
+    font-size: 13px;
+    background: #0f766e;
+}
+
+.btn-estado:hover {
+    background: #115e59;
+}
