@@ -71,3 +71,42 @@ def registrar():
 if __name__ == "__main__":
     crear_tabla()
     app.run(debug=True)
+
+
+@app.route("/editar/<int:id>", methods=["GET", "POST"])
+def editar(id):
+    conexion = conectar_bd()
+
+    tarea = conexion.execute(
+        "SELECT * FROM tareas WHERE id = ?", (id,)
+    ).fetchone()
+
+    if tarea is None:
+        conexion.close()
+        flash("La tarea no existe.")
+        return redirect(url_for("inicio"))
+
+    if request.method == "POST":
+        nombre = request.form.get("nombre", "").strip()
+        descripcion = request.form.get("descripcion", "").strip()
+        prioridad = request.form.get("prioridad", "")
+
+        if not nombre or prioridad not in ["Alta", "Media", "Baja"]:
+            conexion.close()
+            flash("Ingresa un nombre y una prioridad válida.")
+            return redirect(url_for("editar", id=id))
+
+        conexion.execute("""
+            UPDATE tareas
+            SET nombre = ?, descripcion = ?, prioridad = ?
+            WHERE id = ?
+        """, (nombre, descripcion, prioridad, id))
+
+        conexion.commit()
+        conexion.close()
+
+        flash("¡Tarea actualizada correctamente!")
+        return redirect(url_for("inicio"))
+
+    conexion.close()
+    return render_template("editar.html", tarea=tarea)

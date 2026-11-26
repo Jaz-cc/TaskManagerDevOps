@@ -139,3 +139,26 @@ th {
     text-align: center;
     padding: 20px;
 }
+
+.btn-editar {
+    display: inline-block;
+    padding: 7px 13px;
+    background: #1976d2;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+.btn-editar:hover {
+    background: #125ca5;
+}
+
+.volver {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #1976d2;
+    text-decoration: none;
+}
+

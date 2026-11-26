@@ -65,6 +65,7 @@
                         <th>Descripción</th>
                         <th>Prioridad</th>
                         <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -79,6 +80,10 @@
                             </span>
                         </td>
                         <td>{{ tarea.estado }}</td>
+                        <td> <a class="btn-editar" href="{{ url_for('editar', id=tarea.id) }}">
+                            Editar
+                        </a>
+                    </td>
                     </tr>
                     {% endfor %}
                 </tbody>
